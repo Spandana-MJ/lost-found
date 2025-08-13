@@ -1,0 +1,42 @@
+﻿# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Env & secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+client/.env
+server/.env
+
+# Build outputs
+dist/
+build/
+.client-build/
+server/dist/
+client/dist/
+client/build/
+
+# Logs & caches
+logs/
+*.log
+.cache/
+.nyc_output/
+coverage/
+.vscode/
+.DS_Store
+
+# Uploaded files (Multer uploads in dev)
+server/uploads/
+
+# Misc
+*.pem
+*.key
