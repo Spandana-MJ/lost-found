@@ -43,17 +43,17 @@ A web application to report and manage lost and found items. Users can report it
 ![Home Page](screenshots/homepage.png)
 
 ### Sign up page
-![Report Form](screenshots/signup.png)
+![sign up page](screenshots/signup.png)
 
 ### login page
-![Admin Dashboard](screenshots/login.png)
+![login page](screenshots/login.png)
 
 ### Report Item Form
-![Admin Dashboard](screenshots/ReportItem.png)
+![Report item form](screenshots/ReportItem.png)
 
 
 ### user Listings
-![Admin Dashboard](screenshots/user_viewlistings.png)
+![user listings](screenshots/user_viewlistings.png)
 
 
 ### Admin view listings
