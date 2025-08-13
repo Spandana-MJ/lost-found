@@ -53,7 +53,7 @@ A web application to report and manage lost and found items. Users can report it
 
 
 ### user Listings
-![user listings](screenshots/user_viewlistings.png)
+![user listings](screenshots/user_viewlistings.png.png)
 
 
 ### Admin view listings
