@@ -2,19 +2,29 @@
 import React, { useEffect, useState } from "react";
 import { Trash2, CheckCircle } from "lucide-react";
 import API from "../utils/api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Listings() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState("");
+  const navigate = useNavigate();
 
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
-    fetchItems();
+    if (!token) {
+      toast.error("You must be logged in to view this page");
+      navigate("/login");
+      return;
+    }
     fetchUserRole();
+    fetchItems();
   }, []);
 
+  // Fetch all reported items
   const fetchItems = async () => {
     try {
       setLoading(true);
@@ -23,13 +33,19 @@ export default function Listings() {
       });
       setItems(res.data);
     } catch (err) {
-      console.error("❌ Error fetching items:", err);
-      alert(err.response?.data?.message || "Error loading items");
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please log in again.");
+        sessionStorage.clear();
+        navigate("/login");
+      } else {
+        toast.error(err.response?.data?.message || "Error loading items");
+      }
     } finally {
       setLoading(false);
     }
   };
 
+  // Fetch the role of the logged-in user
   const fetchUserRole = async () => {
     try {
       const res = await API.get("/api/auth/me", {
@@ -37,30 +53,41 @@ export default function Listings() {
       });
       setRole(res.data.role);
     } catch (err) {
-      console.error("❌ Error fetching user role:", err);
+      console.error(err);
+      if (err.response?.status === 401) {
+        sessionStorage.clear();
+        navigate("/login");
+      }
     }
   };
 
+  // Verify item (admin only)
   const verifyItem = async (id) => {
     try {
-      await API.put(`/api/items/${id}/verify`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await API.put(
+        `/api/items/${id}/verify`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success("Item verified successfully!");
       fetchItems();
     } catch (err) {
-      console.error("❌ Error verifying item:", err);
-      alert("Could not verify item");
+      toast.error("Could not verify item");
     }
   };
 
+  // Delete item (admin only)
   const deleteItem = async (id) => {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
     try {
-      await API.delete(`/api/items/${id}`);
+      await API.delete(`/api/items/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Item deleted successfully!");
       fetchItems();
     } catch (err) {
-      console.error("❌ Error deleting item:", err);
-      alert("Could not delete item");
+      console.error(err);
+      toast.error("Could not delete item");
     }
   };
 
@@ -111,7 +138,9 @@ export default function Listings() {
                       : "N/A"}
                   </td>
                   <td className="px-4 py-3 font-bold">
-                    <span className={item.verified ? "text-green-600" : "text-yellow-600"}>
+                    <span
+                      className={item.verified ? "text-green-600" : "text-yellow-600"}
+                    >
                       {item.verified ? "verified" : "pending"}
                     </span>
                   </td>
@@ -142,6 +171,3 @@ export default function Listings() {
     </div>
   );
 }
-
-
-

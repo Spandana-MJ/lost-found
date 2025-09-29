@@ -1,3 +1,4 @@
+
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
@@ -7,6 +8,8 @@ import ReportForm from "./pages/ReportForm";
 import Listings from "./pages/Listings";
 import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App() {
   return (
@@ -17,11 +20,26 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/report" element={<ProtectedRoute><ReportForm /></ProtectedRoute>} />
+          <Route
+            path="/report"
+            element={
+              <ProtectedRoute>
+                <ReportForm />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/listings" element={<Listings />} />
-          <Route path="/admin" element={<ProtectedRoute adminOnly={true}><AdminDashboard /></ProtectedRoute>} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute adminOnly={true}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }

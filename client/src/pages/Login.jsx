@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import API from "../utils/api";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -19,9 +20,12 @@ export default function Login() {
       if (res.data.role) sessionStorage.setItem("role", res.data.role);
       if (res.data.user) sessionStorage.setItem("user", JSON.stringify(res.data.user));
 
+
+        toast.success("Login successful!");
       navigate("/");
+      setForm({ email: "", password: "" });
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed");
+       toast.error(err.response?.data?.message || "Login failed"); 
     } finally {
       setLoading(false);
     }
@@ -32,32 +36,36 @@ export default function Login() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">Welcome Back 👋</h1>
         <p className="text-center text-gray-500 mb-6">Login to your account</p>
-        
-        <form onSubmit={submit} className="space-y-4">
-          <input
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            type="email"
-            placeholder="Email Address"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            required
-          />
-          <input
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            required
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-gradient-to-r from-blue-500 to-emerald-500 text-white font-semibold p-3 rounded-lg shadow-md hover:opacity-90 transition disabled:opacity-60"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
+
+        <form onSubmit={submit} className="space-y-4" autoComplete="off">
+  <input
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+    type="email"
+    placeholder="Email Address"
+    value={form.email}
+    onChange={(e) => setForm({ ...form, email: e.target.value })}
+    autoComplete="new-email"
+    required
+  />
+  <input
+    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+    type="password"
+    placeholder="Password"
+    value={form.password}
+    onChange={(e) => setForm({ ...form, password: e.target.value })}
+    autoComplete="new-password"
+    required
+  />
+    <button
+    type="submit"
+    disabled={loading}
+    className="w-full bg-gradient-to-r from-blue-500 to-emerald-500 text-white font-semibold p-3 rounded-lg shadow-md hover:opacity-90 transition disabled:opacity-60"
+  >
+    {loading ? "Logging in..." : "Login"}
+  </button>
+
+</form>
+
 
         <p className="text-sm text-gray-500 text-center mt-6">
           Don’t have an account?{" "}

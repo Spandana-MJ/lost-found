@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import API from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { FaClipboardList } from "react-icons/fa";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ReportForm() {
   const [form, setForm] = useState({
@@ -51,11 +53,13 @@ export default function ReportForm() {
         throw err;
       });
 
-      alert("Report submitted");
+     
+      toast.success("Report submitted");
+
+
       navigate("/listings");
     } catch (err) {
-      console.error("Error submitting report:", err);
-      alert(err.response?.data?.message || "Submit failed");
+      toast.error(err.response?.data?.message || "Submit failed");
     } finally {
       setLoading(false);
     }

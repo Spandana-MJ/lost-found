@@ -1,9 +1,9 @@
 
-
-
 import React, { useEffect, useState } from "react";
 import { Mail, Trash2, ClipboardList, CheckCircle, Clock } from "lucide-react";
 import API from "../utils/api";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ total: 0, received: 0, pending: 0 });
@@ -24,7 +24,7 @@ export default function AdminDashboard() {
       setListings(l.data);
     } catch (err) {
       console.error(err);
-      alert("Failed to load admin data");
+     toast.error("Failed to load admin data");
     }
   };
 
@@ -37,10 +37,10 @@ export default function AdminDashboard() {
     if (!message) return;
     try {
       await API.post(`/api/admin/send-email/${id}`, { subject: "Regarding your item", message });
-      alert("Email sent");
+      toast.success("Email sent");
     } catch (err) {
       console.error(err);
-      alert("Failed to send email");
+      toast.error("Failed to send email");
     }
   };
 
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
       load();
     } catch (err) {
       console.error(err);
-      alert("Failed to delete item");
+      toast.error("Failed to delete item");
     }
   };
 
