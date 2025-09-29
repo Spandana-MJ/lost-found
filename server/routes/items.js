@@ -38,37 +38,6 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
 });
 
 
-
-
-// // 📌 Get items (User → only their own | Admin → all)
-// router.get("/", authMiddleware, async (req, res) => {
-//   try {
-//     let items;
-//     if (req.user.role === "admin") {
-//       items = await Item.find().sort({ createdAt: -1 });
-//     } else {
-//       items = await Item.find({ reporterId: req.user._id }).sort({ createdAt: -1 });
-//     }
-//     res.json(items);
-//   } catch (err) {
-//     console.error("❌ Error fetching items:", err);
-//     res.status(500).json({ message: "Server error fetching items" });
-//   }
-// });
-
-// // 📌 Get verified items (for Admin Dashboard)
-// router.get("/verified", authMiddleware, async (req, res) => {
-//   try {
-//     if (req.user.role !== "admin") return res.status(403).json({ message: "Not authorized" });
-//     const verifiedItems = await Item.find({ verified: true }).sort({ createdAt: -1 });
-//     res.json(verifiedItems);
-//   } catch (err) {
-//     console.error("❌ Error fetching verified items:", err);
-//     res.status(500).json({ message: "Server error fetching verified items" });
-//   }
-// });
-
-
 // 📌 Get stats for admin dashboard
 router.get("/stats", authMiddleware, async (req, res) => {
   try {
@@ -151,10 +120,6 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     res.status(500).json({ message: "Server error deleting item" });
   }
 });
-
-
-
-
 
 module.exports = router;
 
