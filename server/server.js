@@ -39,12 +39,6 @@ app.use("/api/items", require("./routes/items"));
 app.use("/api/admin", require("./routes/admin"));
 
 // Serve React frontend
-const clientBuildPath = path.join(__dirname, "client/dist"); // path to React build
-app.use(express.static(clientBuildPath));
-
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(clientBuildPath, "index.html"));
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
