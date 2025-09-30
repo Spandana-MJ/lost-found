@@ -1,6 +1,6 @@
 
 import { Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
 import Signup from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function App() {
   return (
     <div className="min-h-screen bg-gray-100">
-      <NavBar />
+      <Navbar />
       <div className="container mx-auto p-4">
         <Routes>
           <Route path="/" element={<Home />} />
