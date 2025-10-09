@@ -98,12 +98,7 @@ Open http://localhost:5173 in your browser.
 
 
 
-## 🎬 Project Demo
+🎬 **Project Demo**
 
-Click the thumbnail below to watch the demo video:
+[![Demo Video](https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png)](https://drive.google.com/file/d/11qqrrElIWBaEFXwVibpE8Knr67JLJAJn/view?usp=sharing)
 
-<p align="center">
-  <a href="https://drive.google.com/file/d/11qqrrElIWBaEFXwVibpE8Knr67JLJAJn/view?usp=sharing">
-     <img src="https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png" alt="Demo Video" width="400"/>
-  </a>
-</p>
