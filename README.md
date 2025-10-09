@@ -104,6 +104,6 @@ Click the thumbnail below to watch the demo video:
 
 <p align="center">
   <a href="https://drive.google.com/file/d/11qqrrElIWBaEFXwVibpE8Knr67JLJAJn/view?usp=sharing">
-    <img src="assets/demo-video.png" alt="Demo Video" width="400"/>
+     <img src="https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png" alt="Demo Video" width="400"/>
   </a>
 </p>
