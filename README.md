@@ -3,7 +3,6 @@
 A web application to report and manage lost and found items. Users can report items, and admins can verify, match, and notify owners via email.  
 
 ---
-
 ## Features
 
 ### User
@@ -27,7 +26,6 @@ A web application to report and manage lost and found items. Users can report it
 - Admin can view uploaded images
 
 ---
-
 ## Tech Stack
 - **Frontend:** React, Vite, TailwindCSS  
 - **Backend:** Node.js, Express  
@@ -62,7 +60,7 @@ A web application to report and manage lost and found items. Users can report it
 ### Admin Dashboard
 ![Admin Dashboard](screenshots/Admin_Dasboard.png)
 
----
+
 
 ## Setup Instructions
 
@@ -94,6 +92,8 @@ nodemon server.js
 cd ../client
 npm run dev
 Open http://localhost:5173 in your browser.
+
+```
 
 
 
