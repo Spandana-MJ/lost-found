@@ -100,5 +100,5 @@ Open http://localhost:5173 in your browser.
 
 🎬 **Project Demo**
 
-[![Demo Video](https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png)](https://drive.google.com/file/d/11qqrrElIWBaEFXwVibpE8Knr67JLJAJn/view?usp=sharing)
+[![Demo Video](https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png)](https://drive.google.com/file/d/1SPWpBzKVGpm0LI32mfSSzGxKWSnWIsFY/view?usp=sharing)
 
