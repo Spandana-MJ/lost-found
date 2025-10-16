@@ -34,8 +34,6 @@ coverage/
 .vscode/
 .DS_Store
 
-# Uploaded files (Multer uploads in dev)
-server/uploads/
 
 # Misc
 *.pem

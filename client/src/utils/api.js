@@ -1,8 +1,13 @@
 import axios from "axios";
 
+  // baseURL: import.meta.env.VITE_API_URL,
+ 
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+// baseURL: "http://localhost:5000",
+baseURL:"https://lost-found-5.onrender.com",
 });
+
 
 API.interceptors.request.use((req) => {
   const token = sessionStorage.getItem("token");

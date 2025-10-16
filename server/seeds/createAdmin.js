@@ -15,9 +15,7 @@ const User = require("../models/User"); // Adjust path if needed
     });
     console.log("✅ MongoDB connected");
 
-    // 2️⃣ Your new admin credentials
-    // const email = "spandanaspandumj@gmail.com"; // Change if you want
-    // const plainPassword = "@Spandana#mj123"; // Change but remember it exactly
+  
 
     const email = process.env.ADMIN_EMAIL;
     const plainPassword = process.env.ADMIN_PASS;

@@ -34,12 +34,10 @@ export default function ReportForm() {
   const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       const data = new FormData();
       Object.keys(form).forEach((k) => data.append(k, form[k]));
       if (image) data.append("image", image);
-
       const token = sessionStorage.getItem("token");
 
       await API.post("/api/items", data, {
@@ -53,10 +51,7 @@ export default function ReportForm() {
         throw err;
       });
 
-     
-      toast.success("Report submitted");
-
-
+      toast.success("Report submitted successfully!");
       navigate("/listings");
     } catch (err) {
       toast.error(err.response?.data?.message || "Submit failed");
@@ -67,19 +62,24 @@ export default function ReportForm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 flex items-center justify-center p-6">
-      <div className="bg-white rounded-2xl shadow-lg overflow-hidden w-full max-w-4xl grid grid-cols-1 md:grid-cols-2">
-        
-        {/* Left Side - Banner */}
-        <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-8 text-white flex flex-col justify-center items-center">
-          <FaClipboardList className="text-6xl mb-4" />
-          <h2 className="text-3xl font-bold mb-2">Report Lost / Found Item</h2>
-          <p className="text-center opacity-90 text-sm">
-            Help others by reporting lost or found items. Fill in the details and submit your report.
+      <div className="w-full max-w-5xl backdrop-blur-md bg-white/70 rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 border border-white/30">
+        {/* Left Side */}
+        <div className="bg-gradient-to-br from-green-600 via-emerald-500 to-teal-500 text-white flex flex-col justify-center items-center p-10">
+          <FaClipboardList className="text-7xl mb-4 drop-shadow-lg" />
+          <h2 className="text-4xl font-extrabold mb-3">Report Lost or Found</h2>
+          <p className="text-center text-white/90 leading-relaxed text-sm max-w-sm">
+            Submit lost or found items easily. Help others reconnect with their
+            belongings while keeping the process simple and trustworthy.
           </p>
         </div>
 
-        {/* Right Side - Form */}
-        <form onSubmit={submit} className="p-8 space-y-5">
+        {/* Right Side */}
+        <form onSubmit={submit} className="p-10 space-y-5">
+          <h3 className="text-2xl font-bold text-gray-800 text-center mb-6">
+            Fill in the Details
+          </h3>
+
+          {/* Floating Input Fields */}
           {[
             { label: "Title", key: "title", type: "text" },
             { label: "Location", key: "location", type: "text" },
@@ -93,13 +93,13 @@ export default function ReportForm() {
                 onChange={(e) =>
                   setForm({ ...form, [field.key]: e.target.value })
                 }
-                className="peer w-full border border-gray-300 rounded-lg px-3 pt-5 pb-2 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none"
-                placeholder=" "
+                className="peer w-full border border-gray-200 rounded-xl px-3 pt-5 pb-2 bg-white/60 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none placeholder-transparent"
+                placeholder={field.label}
                 required
               />
               <label
                 htmlFor={field.key}
-                className="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-green-600 peer-focus:text-sm"
+                className="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-green-600 peer-focus:text-sm"
               >
                 {field.label}
               </label>
@@ -113,48 +113,54 @@ export default function ReportForm() {
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
               }
-              className="peer w-full border border-gray-300 rounded-lg px-3 pt-5 pb-2 h-28 resize-none focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none"
-              placeholder=" "
+              className="peer w-full border border-gray-200 rounded-xl px-3 pt-5 pb-2 h-28 resize-none bg-white/60 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none placeholder-transparent"
+              placeholder="Description"
             />
             <label
               htmlFor="description"
-              className="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-green-600 peer-focus:text-sm"
+              className="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-green-600 peer-focus:text-sm"
             >
               Description
             </label>
           </div>
 
-          <input
-            type="date"
-            value={form.dateLostFound}
-            onChange={(e) =>
-              setForm({ ...form, dateLostFound: e.target.value })
-            }
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none"
-          />
+          <div className="flex gap-4">
+            <input
+              type="date"
+              value={form.dateLostFound}
+              onChange={(e) =>
+                setForm({ ...form, dateLostFound: e.target.value })
+              }
+              className="w-1/2 border border-gray-200 rounded-xl px-3 py-2 bg-white/60 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none"
+            />
+            <select
+              value={form.type}
+              onChange={(e) => setForm({ ...form, type: e.target.value })}
+              className="w-1/2 border border-gray-200 rounded-xl px-3 py-2 bg-white/60 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none"
+            >
+              <option value="lost">Lost</option>
+              <option value="found">Found</option>
+            </select>
+          </div>
 
-          <select
-            value={form.type}
-            onChange={(e) => setForm({ ...form, type: e.target.value })}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none"
-          >
-            <option value="lost">Lost</option>
-            <option value="found">Found</option>
-          </select>
-
-          <input
-            type="file"
-            accept="image/*"
-            className="w-full text-sm text-gray-500"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
+          <div className="border-2 border-dashed border-green-300 rounded-xl p-4 text-center bg-white/60 hover:bg-green-50 transition">
+            <input
+              type="file"
+              accept="image/*"
+              className="block w-full text-sm text-gray-600 cursor-pointer"
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+            <p className="text-xs text-gray-400 mt-2">
+              Upload an image (optional)
+            </p>
+          </div>
 
           <button
             disabled={loading}
-            className={`w-full py-3 rounded-lg text-white font-semibold shadow-md transition ${
+            className={`w-full py-3 rounded-xl text-white font-semibold shadow-lg transition-all ${
               loading
                 ? "bg-green-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-green-500 to-emerald-600 hover:opacity-90"
+                : "bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:opacity-90 hover:scale-[1.02]"
             }`}
           >
             {loading ? "Submitting..." : "Submit Report"}
@@ -164,8 +170,6 @@ export default function ReportForm() {
     </div>
   );
 }
-
-
 
 
 
