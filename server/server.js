@@ -41,11 +41,11 @@ app.use("/api/admin", require("./routes/admin"));
 // Serve React frontend
 
 if (process.env.NODE_ENV === 'production') {
-  const path = require('path');
-  app.use(express.static(path.join(__dirname, 'client/dist')));
+  const __dirnameRoot = path.resolve(__dirname, '..'); // go up one folder
+  app.use(express.static(path.join(__dirnameRoot, 'client', 'dist')));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
+    res.sendFile(path.join(__dirnameRoot, 'client', 'dist', 'index.html'));
   });
 }
 
