@@ -7,6 +7,7 @@ import API from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import API from "../utils/api";
 
 export default function Listings() {
   const [items, setItems] = useState([]);
@@ -136,7 +137,7 @@ export default function Listings() {
                   <td className="px-6 py-4 align-middle">
                     {item.imageUrl ? (
                       <img
-                        src={`http://localhost:5000${item.imageUrl}`}
+                        src={`${API.defaults.baseURL}${item.imageUrl}`}
                         alt={item.title}
                         className="w-14 h-14 object-cover rounded-lg border border-gray-200"
                       />
