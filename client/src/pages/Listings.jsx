@@ -7,7 +7,7 @@ import API from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import API from "../utils/api";
+
 
 export default function Listings() {
   const [items, setItems] = useState([]);
