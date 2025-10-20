@@ -9,27 +9,32 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+
+
   const submit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await API.post("/api/auth/login", form);
-      if (!res?.data?.token) throw new Error("No token in response");
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const res = await API.post("/api/auth/login", form);
+    if (!res?.data?.token) throw new Error("No token in response");
 
-      sessionStorage.setItem("token", res.data.token);
-      if (res.data.role) sessionStorage.setItem("role", res.data.role);
-      if (res.data.user) sessionStorage.setItem("user", JSON.stringify(res.data.user));
+    sessionStorage.setItem("token", res.data.token);
+    if (res.data.role) sessionStorage.setItem("role", res.data.role);
+    if (res.data.user)
+      sessionStorage.setItem("user", JSON.stringify(res.data.user));
 
+    // ✅ Trigger a custom event to notify App of login change
+    window.dispatchEvent(new Event("loginStateChange"));
 
-        toast.success("Login successful!");
-      navigate("/");
-      setForm({ email: "", password: "" });
-    } catch (err) {
-       toast.error(err.response?.data?.message || "Login failed"); 
-    } finally {
-      setLoading(false);
-    }
-  };
+    toast.success("Login successful!");
+    navigate("/report"); // redirect to a page that uses sidebar
+    setForm({ email: "", password: "" });
+  } catch (err) {
+    toast.error(err.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-emerald-50 px-4">

@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from "react";
 import API from "../utils/api";
 import { useNavigate } from "react-router-dom";
@@ -61,25 +62,24 @@ export default function ReportForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-5xl backdrop-blur-md bg-white/70 rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 border border-white/30">
+    <div className="h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-5xl h-[90vh] backdrop-blur-md bg-white/70 rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 border border-white/30">
         {/* Left Side */}
-        <div className="bg-gradient-to-br from-green-600 via-emerald-500 to-teal-500 text-white flex flex-col justify-center items-center p-10">
-          <FaClipboardList className="text-7xl mb-4 drop-shadow-lg" />
-          <h2 className="text-4xl font-extrabold mb-3">Report Lost or Found</h2>
-          <p className="text-center text-white/90 leading-relaxed text-sm max-w-sm">
-            Submit lost or found items easily. Help others reconnect with their
-            belongings while keeping the process simple and trustworthy.
+        <div className="bg-gradient-to-br from-green-600 via-emerald-500 to-teal-500 text-white flex flex-col justify-center items-center px-6 py-4">
+          <FaClipboardList className="text-6xl mb-2 drop-shadow-lg" />
+          <h2 className="text-3xl font-extrabold mb-2">Report Lost or Found</h2>
+          <p className="text-center text-white/90 leading-relaxed text-sm max-w-xs">
+            Submit lost or found items easily. Help others reconnect with their belongings.
           </p>
         </div>
 
-        {/* Right Side */}
-        <form onSubmit={submit} className="p-10 space-y-5">
-          <h3 className="text-2xl font-bold text-gray-800 text-center mb-6">
+        {/* Right Side Form */}
+        <form onSubmit={submit} className="p-6 space-y-4 overflow-y-auto">
+          <h3 className="text-xl font-bold text-gray-800 text-center mb-2">
             Fill in the Details
           </h3>
 
-          {/* Floating Input Fields */}
+          {/* Compact Inputs */}
           {[
             { label: "Title", key: "title", type: "text" },
             { label: "Location", key: "location", type: "text" },
@@ -93,44 +93,42 @@ export default function ReportForm() {
                 onChange={(e) =>
                   setForm({ ...form, [field.key]: e.target.value })
                 }
-                className="peer w-full border border-gray-200 rounded-xl px-3 pt-5 pb-2 bg-white/60 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none placeholder-transparent"
+                className="peer w-full border border-gray-200 rounded-xl px-3 pt-4 pb-1 bg-white/60 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none placeholder-transparent"
                 placeholder={field.label}
                 required
               />
               <label
                 htmlFor={field.key}
-                className="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-green-600 peer-focus:text-sm"
+                className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-green-600 peer-focus:text-sm"
               >
                 {field.label}
               </label>
             </div>
           ))}
 
+          {/* Description */}
           <div className="relative">
             <textarea
               id="description"
               value={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
-              className="peer w-full border border-gray-200 rounded-xl px-3 pt-5 pb-2 h-28 resize-none bg-white/60 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none placeholder-transparent"
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              className="peer w-full border border-gray-200 rounded-xl px-3 pt-4 pb-1 h-20 resize-none bg-white/60 shadow-sm focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none placeholder-transparent"
               placeholder="Description"
             />
             <label
               htmlFor="description"
-              className="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-green-600 peer-focus:text-sm"
+              className="absolute left-3 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-green-600 peer-focus:text-sm"
             >
               Description
             </label>
           </div>
 
-          <div className="flex gap-4">
+          {/* Date + Type */}
+          <div className="flex gap-3">
             <input
               type="date"
               value={form.dateLostFound}
-              onChange={(e) =>
-                setForm({ ...form, dateLostFound: e.target.value })
-              }
+              onChange={(e) => setForm({ ...form, dateLostFound: e.target.value })}
               className="w-1/2 border border-gray-200 rounded-xl px-3 py-2 bg-white/60 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none"
             />
             <select
@@ -143,21 +141,21 @@ export default function ReportForm() {
             </select>
           </div>
 
-          <div className="border-2 border-dashed border-green-300 rounded-xl p-4 text-center bg-white/60 hover:bg-green-50 transition">
+          {/* File Upload */}
+          <div className="border-2 border-dashed border-green-300 rounded-xl p-3 text-center bg-white/60 hover:bg-green-50 transition text-sm">
             <input
               type="file"
               accept="image/*"
-              className="block w-full text-sm text-gray-600 cursor-pointer"
+              className="block w-full text-gray-600 cursor-pointer"
               onChange={(e) => setImage(e.target.files[0])}
             />
-            <p className="text-xs text-gray-400 mt-2">
-              Upload an image (optional)
-            </p>
+            <p className="text-xs text-gray-400 mt-1">Upload an image (optional)</p>
           </div>
 
+          {/* Button */}
           <button
             disabled={loading}
-            className={`w-full py-3 rounded-xl text-white font-semibold shadow-lg transition-all ${
+            className={`w-full py-2.5 rounded-xl text-white font-semibold shadow-lg transition-all ${
               loading
                 ? "bg-green-300 cursor-not-allowed"
                 : "bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:opacity-90 hover:scale-[1.02]"
@@ -170,6 +168,4 @@ export default function ReportForm() {
     </div>
   );
 }
-
-
 

@@ -35,18 +35,7 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex gap-5">
-            <Link
-              to="/report"
-              className="px-6 py-3 rounded-xl text-white font-semibold shadow-md bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-700 hover:to-blue-700 hover:scale-105 hover:shadow-xl transition-all duration-300"
-            >
-              🚀 Report an Item
-            </Link>
-            <Link
-              to="/listings"
-              className="px-6 py-3 rounded-xl border font-semibold border-gray-300 bg-white hover:bg-gray-100 shadow-sm hover:scale-105 transition-transform duration-300"
-            >
-              🔍 View Listings
-            </Link>
+           
           </div>
         </motion.div>
 
