@@ -2,18 +2,24 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const path = require("path");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../utils/cloudinary");
 const authMiddleware = require("../middleware/auth");
 const Item = require("../models/Item");
 
-// Multer setup
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
+// 🧩 Cloudinary Storage setup
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "lost-found-items",
+    allowed_formats: ["jpg", "png", "jpeg"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }],
+  },
 });
+
 const upload = multer({ storage });
 
-// 📌 Create new item
+// 📌 Create new item (Upload to Cloudinary)
 router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
   try {
     const { title, description, location, dateLostFound, type, reporterEmail } = req.body;
@@ -26,16 +32,17 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
       type,
       reporterEmail,
       reporterId: req.user._id,
-      imageUrl: req.file ? `/uploads/${req.file.filename}` : null
+      imageUrl: req.file?.path || null, // Cloudinary returns image URL in req.file.path
     });
 
     await newItem.save();
-    res.json(newItem);
+    res.status(201).json(newItem);
   } catch (err) {
     console.error("❌ Error creating item:", err);
     res.status(500).json({ message: "Server error while creating item" });
   }
 });
+
 
 
 // 📌 Get stats for admin dashboard

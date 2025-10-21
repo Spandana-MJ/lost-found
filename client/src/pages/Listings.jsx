@@ -137,7 +137,7 @@ export default function Listings() {
                   <td className="px-6 py-4 align-middle">
                     {item.imageUrl ? (
                       <img
-                        src={`${API.defaults.baseURL}${item.imageUrl}`}
+                        src={item.imageUrl}
                         alt={item.title}
                         className="w-14 h-14 object-cover rounded-lg border border-gray-200"
                       />
