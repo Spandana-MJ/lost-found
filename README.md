@@ -38,27 +38,27 @@ A web application to report and manage lost and found items. Users can report it
 ## Screenshots
 
 ### Home Page
-![Home Page](screenshots/homepage.png)
+![Home Page](screenshots/Home.png)
 
 ### Sign up page
-![sign up page](screenshots/signup.png)
+![sign up page](screenshots/Signup.png)
 
 ### login page
 ![login page](screenshots/login.png)
 
 ### Report Item Form
-![Report item form](screenshots/ReportItem.png)
+![Report item form](screenshots/report.png)
 
 
 ### user Listings
-![user listings](screenshots/user_viewlistings.png.png)
+![user listings](screenshots/viewlist.png)
 
 
 ### Admin view listings
-![Admin Viewlistings](screenshots/Admin_ViewListings.png)
+![Admin Viewlistings](screenshots/viewlisting.png)
 
 ### Admin Dashboard
-![Admin Dashboard](screenshots/Admin_Dasboard.png)
+![Admin Dashboard](screenshots/admindashboard.png)
 
 
 
@@ -100,5 +100,5 @@ Open http://localhost:5173 in your browser.
 
 🎬 **Project Demo**
 
-[![Demo Video](https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png)](https://drive.google.com/file/d/1SPWpBzKVGpm0LI32mfSSzGxKWSnWIsFY/view?usp=sharing)
+[![Demo Video](https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png)](https://drive.google.com/file/d/1ywxdusUf0LhL1RfEeBKUj-UMS70JCM5-/preview)
 
