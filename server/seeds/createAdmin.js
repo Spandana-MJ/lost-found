@@ -1,29 +1,19 @@
 
-
-
 require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const User = require("../models/User"); // Adjust path if needed
+const User = require("../models/User"); 
 
 (async () => {
   try {
-    // 1️⃣ Connect to MongoDB
+   
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
     console.log("✅ MongoDB connected");
-
-  
-
     const email = process.env.ADMIN_EMAIL;
     const plainPassword = process.env.ADMIN_PASS;
-
-
-
-
-    // 3️⃣ Check if already exists
     let existing = await User.findOne({ email });
     if (existing) {
       console.log("⚠️ Admin already exists. Deleting old one...");

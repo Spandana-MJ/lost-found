@@ -1,22 +1,30 @@
-
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../utils/api";
 
-export default function Navbar() {
+// isLoggedIn is passed from App.jsx — driven by /api/auth/me, not sessionStorage
+export default function Navbar({ isLoggedIn }) {
   const navigate = useNavigate();
-  const token = sessionStorage.getItem("token");
 
-  const handleLogout = () => {
-    sessionStorage.clear();
-     window.dispatchEvent(new Event("loginStateChange"));
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await API.post("/api/auth/logout");
+    } catch (err) {
+      console.error("Logout server error:", err.message);
+    } finally {
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("name");
+      sessionStorage.removeItem("email");
+      // Tell App.jsx to re-check auth (which will return 401 since cookie is cleared)
+      window.dispatchEvent(new Event("loginStateChange"));
+      navigate("/login");
+    }
   };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <Link
             to="/"
             className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent"
@@ -24,16 +32,8 @@ export default function Navbar() {
             Lost & Found
           </Link>
 
-          {/* Right side links */}
           <div className="flex items-center gap-4">
-            {/* <Link
-              to="/"
-              className="text-gray-700 hover:text-indigo-600 transition-colors"
-            >
-              Home
-            </Link> */}
-
-            {!token ? (
+            {!isLoggedIn ? (
               <>
                 <Link
                   to="/login"

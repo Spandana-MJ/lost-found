@@ -7,6 +7,7 @@ import LostAndFoundImg from '../assets/lost-img.png';
 import manageImg from '../assets/manage.png';
 import reportingImg from '../assets/reporting.png';
 import community from '../assets/community.png';
+import PublicList from "./PublicList";
 export default function Home() {
   return (
     <div className="relative overflow-hidden bg-gradient-to-b from-blue-100 via-white to-indigo-100 min-h-screen font-inter">
@@ -36,7 +37,16 @@ export default function Home() {
 
           <div className="mt-8 flex gap-5">
            
-          </div>
+  <Link to="/browse"
+    className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition">
+    Browse Items
+  </Link>
+  <Link to="/signup"
+    className="px-6 py-3 border-2 border-indigo-600 text-indigo-600 rounded-xl font-semibold hover:bg-indigo-50 transition">
+    Get Started
+  </Link>
+</div>
+        
         </motion.div>
 
         {/* Illustration Section */}

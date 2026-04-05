@@ -1,22 +1,36 @@
+
 import axios from "axios";
 
-  // baseURL: import.meta.env.VITE_API_URL,
- 
-
 const API = axios.create({
-  // baseURL: "http://localhost:5000",
-baseURL:"https://lost-found-5.onrender.com",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
+  withCredentials: true,
 });
 
+const PUBLIC_PATHS = ["/", "/login", "/signup", "/browse"];
 
-API.interceptors.request.use((req) => {
-  const token = sessionStorage.getItem("token");
-  if (token) req.headers.Authorization = `Bearer ${token}`;
-  return req;
-});
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const is401 = error.response?.status === 401;
+    const currentPath = window.location.pathname;
+    const onPublicPage = PUBLIC_PATHS.includes(currentPath);
+
+    // Prevent redirect during auth-check API call
+    const isAuthCheck = error.config?.url?.includes("/api/auth/me");
+
+    if (is401 && !onPublicPage && !isAuthCheck) {
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("name");
+      sessionStorage.removeItem("email");
+
+      window.dispatchEvent(new Event("loginStateChange"));
+
+      // Redirect only for protected pages
+      window.location.href = "/login";
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default API;
-
-
-
-

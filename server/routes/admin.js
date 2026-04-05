@@ -1,3 +1,4 @@
+
 const express = require("express");
 const Item = require("../models/Item");
 const sendMail = require("../utils/mailer");
@@ -5,77 +6,92 @@ const auth = require("../middleware/auth");
 
 const router = express.Router();
 
-// Get dashboard stats
+// ── GET /api/admin/stats ──────────────────────────────────────
 router.get("/stats", auth, async (req, res) => {
   try {
-    const totalReports = await Item.countDocuments();
-    const receivedCases = await Item.countDocuments({ status: "verified" });
-    const pendingReports = await Item.countDocuments({ status: "pending" });
-    res.json({ totalReports, receivedCases, pendingReports });
+    const total         = await Item.countDocuments();
+    const receivedCases = await Item.countDocuments({ verified: true });
+    const pendingReports= await Item.countDocuments({ verified: false });
+    res.json({ total, receivedCases, pendingReports });
   } catch (err) {
-    res.status(500).send("Server error");
+    console.error("❌ Error fetching admin stats:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-// Manage items
+// ── GET /api/admin/items ──────────────────────────────────────
 router.get("/items", auth, async (req, res) => {
   try {
-    const items = await Item.find();
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+    const items = await Item.find().sort({ createdAt: -1 });
     res.json(items);
   } catch (err) {
-    res.status(500).send("Server error");
+    console.error("❌ Error fetching admin items:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-
-
-
-// Send email to reporter manually
+// ── POST /api/admin/send-email/:id ───────────────────────────
 router.post("/send-email/:id", auth, async (req, res) => {
   try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
     const item = await Item.findById(req.params.id);
-    if (!item) return res.status(404).json({ msg: "Item not found" });
+    if (!item) return res.status(404).json({ message: "Item not found" });
+
+    const { subject, message } = req.body;
+
+    if (!message || message.trim().length < 10) {
+      return res.status(422).json({ message: "Message is too short" });
+    }
 
     await sendMail(
       item.reporterEmail,
-      "Update on your lost item",
-      `We have updates about your item: ${item.title}. Please contact us for more details.`
+      subject || "Update on your reported item",
+      message
     );
 
-    res.json({ msg: "Email sent successfully" });
+    res.json({ message: "Email sent successfully" });
   } catch (err) {
-    res.status(500).send("Server error");
+    console.error("❌ Error sending email:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
+// ── PUT /api/admin/verify/:id ─────────────────────────────────
 
-// Verify item and send email
 router.put("/verify/:id", auth, async (req, res) => {
   try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
     const item = await Item.findByIdAndUpdate(
       req.params.id,
-      { status: "verified" },
+      { verified: true }, 
       { new: true }
     );
 
-    if (item) {
-      await sendMail(
-        item.reporterEmail,
-        "Your lost item has been found!",
-        `We have verified your item: ${item.title}. Please contact us for more details.`
-      );
-    }
+    if (!item) return res.status(404).json({ message: "Item not found" });
+
+    await sendMail(
+      item.reporterEmail,
+      "Your reported item has been verified!",
+      `Great news! Your item "${item.title}" has been verified by our team. Please log in to view the details.`
+    );
 
     res.json(item);
   } catch (err) {
-    res.status(500).send("Server error");
+    console.error("❌ Error verifying item:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
 module.exports = router;
-
-
-
 
 
 

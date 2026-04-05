@@ -1,6 +1,4 @@
 
-
-
 // utils/sendTestEmail.js
 require("dotenv").config();
 const sendMail = require("./mailer"); // make sure mailer.js is in utils/
