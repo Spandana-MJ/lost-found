@@ -55,7 +55,7 @@ router.get("/public", async (req, res) => {
 
     const filter = {
       verified: false, // ✅ CHANGED: false = still lost, not yet found by admin
-      type: "lost",    // ✅ only lost items make sense to browse publicly
+       type: "lost",    // ✅ only lost items make sense to browse publicly
       ...(search && {
         $or: [
           { title:       { $regex: search, $options: "i" } },

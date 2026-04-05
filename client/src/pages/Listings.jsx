@@ -192,13 +192,27 @@ export default function Listings() {
 
                     {/* ✅ Status column — clear language */}
                     <td className="px-6 py-4 align-middle font-semibold">
-                      <span className={`px-3 py-1 rounded-full text-sm ${
+                      {/* <span className={`px-3 py-1 rounded-full text-sm ${
                         item.verified
                           ? "bg-green-100 text-green-700"   // found by admin
                           : "bg-red-100 text-red-600"       // still lost
                       }`}>
                         {item.verified ? "✅ Found" : "🔴 Still Lost"}
-                      </span>
+                      </span> */}
+
+                      <span className={`px-3 py-1 rounded-full text-sm ${
+    item.verified
+      ? "bg-green-100 text-green-700"
+      : item.type === "lost"
+        ? "bg-red-100 text-red-600"
+        : "bg-blue-100 text-blue-600"
+  }`}>
+    {item.verified
+      ? "✅ Resolved"
+      : item.type === "lost"
+        ? "🔴 Still Lost"
+        : "🔵 Found Item"}
+  </span>
                     </td>
 
                     {/* ✅ Admin actions — button says "Mark as Found" */}

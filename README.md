@@ -11,36 +11,39 @@ A full-stack platform to report, browse, and recover lost items. Users report lo
 
 ---
 
-## 📸 Screenshots
+
+## Screenshots
 
 ### Home Page
-![Home Page](screenshots/Home.png)
+![Home Page](./screenshots/Homepage.png)
 
-### Sign up page
-![sign up page](screenshots/signup.png)
+### Report Item form
+![sign up page](./screenshots/Reportpage.png)
 
-### login page
-![login page](screenshots/login.png)
+### view listings
+![login page](./screenshots/Reported-itempage.png)
 
-### Report Item Form
-![Report item form](screenshots/report.png)
-
-
-### user Listings
-![user listings](screenshots/viewlist.png)
+### browse item page
+![Report item form](./screenshots/Browseitem.png)
 
 
-### Admin view listings
-![Admin Viewlistings](screenshots/viewlisting.png)
+### email page
+![user listings](./screenshots/emailpage.png)
+
+
+### delete page
+![Admin Viewlistings](./screenshots/Deletepage.png)
 
 ### Admin Dashboard
-![Admin Dashboard](screenshots/admindashboard.png)
+![Admin Dashboard](./screenshots/Admindashboard.png)
 
 
 
 🎬 **Project Demo**
 
-[![Demo Video](https://github.com/Spandana-MJ/lost-found/raw/main/assets/demo-video.png)](https://drive.google.com/file/d/1ywxdusUf0LhL1RfEeBKUj-UMS70JCM5-/preview)
+
+
+[![Watch Demo](./assets/Homepage.png)](https://drive.google.com/file/d/1jDRb05lc4UvxENWh-Vo5EIJpdgfgoG-d/view?usp=sharing)
 
 ---
 
