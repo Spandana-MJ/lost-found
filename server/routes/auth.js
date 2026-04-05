@@ -10,8 +10,7 @@ const router = express.Router();
 // ── Cookie config ─────────────────────────────────────────────
 const COOKIE_OPTIONS = {
   httpOnly: true,                                      
-  secure: process.env.NODE_ENV === "production",
-  secure: false,        
+  secure: process.env.NODE_ENV === "production",       
    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
   maxAge: 24 * 60 * 60 * 1000,                        
 };
