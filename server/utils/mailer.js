@@ -1,50 +1,26 @@
+const { Resend } = require("resend");
 
-const nodemailer = require("nodemailer");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-// ── Verify connection on startup ──────────────────────────────
-transporter.verify((err, success) => {
-  if (err) {
-    console.error("❌ Email transporter failed to connect:", err.message);
-    console.error("   Check EMAIL_USER and EMAIL_PASS in your .env file");
-    console.error("   EMAIL_PASS must be a Gmail App Password (16 chars, no spaces)");
-  } else {
-    console.log("✅ Email transporter ready — connected to Gmail");
-  }
-});
-
-// ── Send mail helper ──────────────────────────────────────────
-async function sendMail(to, subject, text, html) {
-  if (!to) {
-    console.error("❌ sendMail called with no recipient");
-    throw new Error("Recipient email is required");
-  }
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error("❌ EMAIL_USER or EMAIL_PASS not set in .env");
-    throw new Error("Email credentials not configured");
-  }
-
+async function sendMail(to, subject, text) {
   try {
-    const info = await transporter.sendMail({
-      from: `"Lost & Found App" <${process.env.ADMIN_EMAIL}>`,
+    const { data, error } = await resend.emails.send({
+      from: "Lost & Found <onboarding@resend.dev>", 
       to,
       subject,
-      text,
-      html: html || `<p>${text}</p>`, 
+      html: `<p>${text}</p>`,
     });
-    console.log(`✅ Email sent to ${to} — MessageId: ${info.messageId}`);
-    return info;
+
+    if (error) {
+      console.error("❌ Resend error:", error);
+      throw new Error(error.message);
+    }
+
+    console.log("✅ Email sent:", data.id);
+    return data;
   } catch (err) {
-    console.error(`❌ Failed to send email to ${to}:`, err.message);
-    throw err; 
+    console.error("❌ Failed to send email:", err.message);
+    throw err;
   }
 }
 
