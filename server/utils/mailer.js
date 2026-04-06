@@ -2,9 +2,9 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // true for port 465
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -34,7 +34,7 @@ async function sendMail(to, subject, text, html) {
 
   try {
     const info = await transporter.sendMail({
-      from: `"Lost & Found App" <${process.env.EMAIL_USER}>`,
+      from: `"Lost & Found App" <${process.env.ADMIN_EMAIL}>`,
       to,
       subject,
       text,
