@@ -14,6 +14,11 @@ connectDB();
 
 const app = express();
 app.set("trust proxy", 1);
+
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  credentials: true,
+}));
 // ── Security headers ──────────────────────────────────────────
 app.use(helmet());
 
@@ -26,10 +31,7 @@ if (process.env.NODE_ENV !== "test") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
-  credentials: true,
-}));
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ── Rate limiting on login ────────────────────────────────────
