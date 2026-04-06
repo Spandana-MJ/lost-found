@@ -1,15 +1,15 @@
 
 const nodemailer = require("nodemailer");
 
-// ── Create transporter ────────────────────────────────────────
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // true for port 465
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, 
+    pass: process.env.EMAIL_PASS,
   },
 });
-
 // ── Verify connection on startup ──────────────────────────────
 transporter.verify((err, success) => {
   if (err) {
