@@ -35,7 +35,7 @@ A full-stack platform to report, browse, and recover lost items. Users report lo
 ![Admin Viewlistings](./screenshots/Deletepage.png)
 
 ### Admin Dashboard
-![Admin Dashboard](./screenshots/Admindashboard.png)
+![Admin Dashboard](./screenshots/admindashboard.png)
 
 
 
