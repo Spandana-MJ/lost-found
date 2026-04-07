@@ -6,8 +6,8 @@ A full-stack platform to report, browse, and recover lost items. Users report lo
 
 ## 🚀 Live Demo
 
-> **Frontend:** [your-vercel-url.vercel.app](https://your-vercel-url.vercel.app)  
-> **Backend:** [your-render-url.onrender.com](https://your-render-url.onrender.com)
+> **Live-demo:**(https://lost-found-gilt.vercel.app/)  
+
 
 ---
 
@@ -15,7 +15,7 @@ A full-stack platform to report, browse, and recover lost items. Users report lo
 ## Screenshots
 
 ### Home Page
-![Home Page](./screenshots/Homepage.png)
+![Home Page](./screenshots/homepage.png)
 
 ### Report Item form
 ![sign up page](./screenshots/Reportpage.png)
@@ -282,14 +282,6 @@ VITE_API_URL=http://localhost:5000
 | GET | `/api/items/stats` | Dashboard stats | Admin |
 | POST | `/api/admin/send-email/:id` | Email reporter | Admin |
 
----
-
-## ⚠️ Known Limitations
-
-- Sessions expire after 1 day (no refresh token implemented)
-- Email delivery depends on Gmail App Password configuration
-- No real-time notifications (would use Socket.io in production)
-- No image moderation before items go live
 
 ---
 
